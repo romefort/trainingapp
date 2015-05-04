@@ -12,4 +12,4 @@ ADD . /app
 RUN npm install -g nodemon
 
 EXPOSE 8080
-ENTRYPOINT ["/nodejs/nodemon", "-x" , "bin/www"]
+ENTRYPOINT ["/nodejs/bin/nodemon", "-x" , "bin/www"]
