@@ -3,7 +3,7 @@ var router = express.Router();
 
 
 var pg = require('pg');
-var conString = "postgres://postgres:"+process.env.POSTGRES_ENV_POSTGRES_PASSWORD+"@"+process.env.POSTGRES_PORT_5432_TCP_ADDR+"/postgres";
+var conString = "postgres://postgres:mysecretpassword@postgresql/postgres";
 
 //this starts initializes a connection pool
 //it will keep idle connections open for a (configurable) 30 seconds
