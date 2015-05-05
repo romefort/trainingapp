@@ -1,19 +1,36 @@
 var express = require('express');
 var router = express.Router();
 
-var redis = require("redis"),
-        client = redis.createClient(process.env.REDIS_PORT_6379_TCP_PORT, process.env.REDIS_PORT_6379_TCP_ADDR, null);
+
+var pg = require('pg');
+var conString = "postgres://postgres:"+process.env.POSTGRES_ENV_POSTGRES_PASSWORD+"@"+process.env.POSTGRES_PORT_5432_TCP_ADDR+"/postgres";
+
+//this starts initializes a connection pool
+//it will keep idle connections open for a (configurable) 30 seconds
+//and set a limit of 20 (also configurable)
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-   client.set("foo_rand000000000000", "xOK!!!");
 
-   // This will return a JavaScript String
-   client.get("foo_rand000000000000", function (err, reply) {
-       console.log(reply.toString()); // Will print `OK`
-   });
+  var client = new pg.Client(conString);
+  client.connect(function(err) {
+    if(err) {
+      return console.error('could not connect to postgres', err);
+    }
+    client.query('SELECT NOW() AS "theTime"', function(err, result) {
+      if(err) {
+        return console.error('error running query', err);
+      }
+      console.log(result.rows[0].theTime);
+      res.render('index', { title: 'Hello from postgres: '+ result.rows[0].theTime });
 
-  res.render('index', { title: 'Hello Hey Willkommen im Buro2.0' });
+      //output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)
+      client.end();
+    });
+  });
+
+
+
 });
 
 module.exports = router;
