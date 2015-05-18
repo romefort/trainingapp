@@ -1,0 +1,32 @@
+{
+  "app_name": "training",
+  "services": [
+    {
+      "service_name": "training-service",
+      "components": [
+        {
+          "component_name": "nodejs",
+          "image": "containera/trainingapp",
+          "ports": [8080],
+          "dependencies": [
+            {
+              "name": "postgresql",
+              "port": 5432
+            }
+          ],
+          "domains": {
+            "training-000.gigantic.io": 8080
+          }
+        },
+        {
+          "component_name": "postgresql",
+          "image": "postgres",
+          "ports": [5432],
+          "env": {
+           "POSTGRES_PASSWORD": "huhuhu"
+         }
+        }
+      ]
+    }
+  ]
+}
