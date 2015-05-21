@@ -8,6 +8,9 @@
           "component_name": "nodejs",
           "image": "containera/trainingapp",
           "ports": [8080],
+          "env": {
+           "POSTGRES_PASSWORD": "huhuhu"
+         },
           "dependencies": [
             {
               "name": "postgresql",
@@ -15,7 +18,7 @@
             }
           ],
           "domains": {
-            "training-000.gigantic.io": 8080
+            "training-00001.gigantic.io": 8080
           }
         },
         {
